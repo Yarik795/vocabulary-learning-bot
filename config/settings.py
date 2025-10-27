@@ -26,14 +26,22 @@ if not OPENROUTER_API_KEY:
 # ПУТИ К ПАПКАМ
 # ============================================================================
 
-# Базовая директория проекта
-BASE_DIR = Path(__file__).parent.parent
+# Определение путей для хранения данных
+# В production (Amvera) используются абсолютные пути /data/ (Persistent Storage)
+# В разработке используются локальные пути относительно проекта
+if os.path.exists("/data"):
+    # Production: Amvera с persistent storage
+    DATA_DIR = Path("/data")
+    LOGS_DIR = Path("/data/logs")
+else:
+    # Разработка: локальные пути для тестирования
+    BASE_DIR = Path(__file__).parent.parent
+    DATA_DIR = BASE_DIR / "data"
+    LOGS_DIR = BASE_DIR / "logs"
 
-# Папка для данных
-DATA_DIR = BASE_DIR / "data"
+# Производные пути (автоматически переместятся в /data/ на production)
 AUDIO_CACHE_DIR = DATA_DIR / "audio_cache"
 VARIANTS_CACHE_DIR = DATA_DIR / "variants_cache"
-LOGS_DIR = BASE_DIR / "logs"
 
 # ============================================================================
 # ПАРАМЕТРЫ ОБУЧЕНИЯ (легко редактируемые)

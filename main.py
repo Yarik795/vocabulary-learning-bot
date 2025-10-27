@@ -248,8 +248,7 @@ async def main():
 if __name__ == "__main__":
     # ⚠️ ВАЖНО: Создаём папку логов ДО инициализации логирования
     # FileHandler не создаёт папку автоматически, поэтому нужно сделать это вручную
-    from pathlib import Path
-    LOGS_DIR = Path(__file__).parent / "logs"
+    # Используем LOGS_DIR из settings (поддерживает как локальные, так и production пути)
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     
     # Настройка логирования
